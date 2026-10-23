@@ -1,0 +1,27 @@
+<h1>Chi tiết câu hỏi</h1>
+
+<p>
+  <a href="/questions">← Danh sách câu hỏi</a> |
+  <a href="/questions/<%= question._id %>/edit">Sửa câu hỏi</a>
+</p>
+
+<article class="quiz-question">
+  <h2><%= question.text %></h2>
+
+  <ol type="A">
+    <% (question.options || []).forEach(function (option, index) { %>
+      <li>
+        <%= option %>
+
+        <% if (index === question.correctAnswerIndex) { %>
+          <strong> — Đáp án đúng</strong>
+        <% } %>
+      </li>
+    <% }); %>
+  </ol>
+
+  <p>
+    Từ khóa:
+    <%= (question.keywords || []).join(', ') || 'Chưa có' %>
+  </p>
+</article>

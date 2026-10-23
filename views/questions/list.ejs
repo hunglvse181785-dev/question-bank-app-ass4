@@ -1,0 +1,54 @@
+<h1>Danh sách câu hỏi</h1>
+
+<p>
+  <a href="/">Trang chủ</a> |
+  <a href="/questions/create">+ Tạo câu hỏi mới</a>
+</p>
+
+<p>Tổng số câu hỏi: <strong><%= questions.length %></strong></p>
+
+<% if (questions.length === 0) { %>
+  <p>Chưa có câu hỏi nào.</p>
+<% } else { %>
+  <div class="quiz-table-wrapper">
+    <table class="quiz-table">
+      <thead>
+        <tr>
+          <th>STT</th>
+          <th>Nội dung</th>
+          <th>Đáp án đúng</th>
+          <th>Từ khóa</th>
+          <th>Thao tác</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% questions.forEach(function (question, index) { %>
+          <tr>
+            <td><%= index + 1 %></td>
+            <td><%= question.text %></td>
+            <td>
+              <%= (question.options || [])[question.correctAnswerIndex] || '' %>
+            </td>
+            <td><%= (question.keywords || []).join(', ') %></td>
+            <td>
+              <div class="quiz-actions">
+                <a href="/questions/<%= question._id %>">Chi tiết</a>
+
+                <a href="/questions/<%= question._id %>/edit">Sửa</a>
+
+                <form
+                  action="/questions/<%= question._id %>?_method=DELETE"
+                  method="POST"
+                  onsubmit="return confirm('Bạn có chắc muốn xóa câu hỏi này?');"
+                >
+                  <button type="submit">Xóa</button>
+                </form>
+              </div>
+            </td>
+          </tr>
+        <% }); %>
+      </tbody>
+    </table>
+  </div>
+<% } %>

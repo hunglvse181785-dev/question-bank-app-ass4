@@ -1,0 +1,337 @@
+{
+  "info": {
+    "_postman_id": "504a415c-f53e-4f6b-8989-040abdfecf38",
+    "name": "SimpleQuiz - 13 APIs",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "49480691",
+    "_collection_link": "https://go.postman.co/collection/49480691-504a415c-f53e-4f6b-8989-040abdfecf38?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "01 - Get all quizzes",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://localhost:3443/api/quizzes",
+          "protocol": "https",
+          "host": [
+            "localhost"
+          ],
+          "port": "3443",
+          "path": [
+            "api",
+            "quizzes"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "02 - Get all questions",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://localhost:3443/api/questions",
+          "protocol": "https",
+          "host": [
+            "localhost"
+          ],
+          "port": "3443",
+          "path": [
+            "api",
+            "questions"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "03 - Create quiz",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"title\": \"Postman Practice Quiz\",\r\n  \"description\": \"Quiz created from Postman\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://localhost:3443/api/quizzes",
+          "protocol": "https",
+          "host": [
+            "localhost"
+          ],
+          "port": "3443",
+          "path": [
+            "api",
+            "quizzes"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "04 - Create question",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"text\": \"What is the capital of Italy?\",\r\n  \"options\": [\"Rome\", \"Paris\", \"Berlin\", \"Madrid\"],\r\n  \"keywords\": [\"capital\", \"geography\"],\r\n  \"correctAnswerIndex\": 0\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://localhost:3443/api/questions",
+          "protocol": "https",
+          "host": [
+            "localhost"
+          ],
+          "port": "3443",
+          "path": [
+            "api",
+            "questions"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "05 - Get quiz by ID",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://localhost:3443/api/quizzes/6ac353c8dafcf7f85f9df58c",
+          "protocol": "https",
+          "host": [
+            "localhost"
+          ],
+          "port": "3443",
+          "path": [
+            "api",
+            "quizzes",
+            "6ac353c8dafcf7f85f9df58c"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "06 - Get question by ID",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://localhost:3443/api/questions/6ac352ecdafcf7f85f9df58a",
+          "protocol": "https",
+          "host": [
+            "localhost"
+          ],
+          "port": "3443",
+          "path": [
+            "api",
+            "questions",
+            "6ac352ecdafcf7f85f9df58a"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "07 - Update quiz",
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"title\": \"Updated Postman Quiz\",\r\n  \"description\": \"Quiz updated from Postman\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://localhost:3443/api/quizzes/6ac353c8dafcf7f85f9df58c",
+          "protocol": "https",
+          "host": [
+            "localhost"
+          ],
+          "port": "3443",
+          "path": [
+            "api",
+            "quizzes",
+            "6ac353c8dafcf7f85f9df58c"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "08 - Update question",
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"text\": \"Which city is the capital of Italy?\",\r\n  \"keywords\": [\"capital\", \"geography\", \"italy\"]\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://localhost:3443/api/questions/6ac352ecdafcf7f85f9df58a",
+          "protocol": "https",
+          "host": [
+            "localhost"
+          ],
+          "port": "3443",
+          "path": [
+            "api",
+            "questions",
+            "6ac352ecdafcf7f85f9df58a"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "12 - Add one question to quiz",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"text\": \"What is the capital of Germany?\",\r\n  \"options\": [\"Paris\", \"London\", \"Berlin\", \"Madrid\"],\r\n  \"keywords\": [\"capital\", \"geography\"],\r\n  \"correctAnswerIndex\": 2\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://localhost:3443/api/quizzes/6ac353c8dafcf7f85f9df58c/question",
+          "protocol": "https",
+          "host": [
+            "localhost"
+          ],
+          "port": "3443",
+          "path": [
+            "api",
+            "quizzes",
+            "6ac353c8dafcf7f85f9df58c",
+            "question"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "13 - Add many questions to quiz",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "[\r\n  {\r\n    \"text\": \"What is the capital of Japan?\",\r\n    \"options\": [\"Tokyo\", \"Seoul\", \"Beijing\", \"Bangkok\"],\r\n    \"keywords\": [\"capital\", \"asia\"],\r\n    \"correctAnswerIndex\": 0\r\n  },\r\n  {\r\n    \"text\": \"Which continent is France in?\",\r\n    \"options\": [\"Asia\", \"Europe\", \"Africa\", \"America\"],\r\n    \"keywords\": [\"continent\", \"geography\"],\r\n    \"correctAnswerIndex\": 1\r\n  }\r\n]",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://localhost:3443/api/quizzes/6ac353c8dafcf7f85f9df58c/questions",
+          "protocol": "https",
+          "host": [
+            "localhost"
+          ],
+          "port": "3443",
+          "path": [
+            "api",
+            "quizzes",
+            "6ac353c8dafcf7f85f9df58c",
+            "questions"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "11 – Get capital questions",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://localhost:3443/api/quizzes/6ac353c8dafcf7f85f9df58c/populate",
+          "protocol": "https",
+          "host": [
+            "localhost"
+          ],
+          "port": "3443",
+          "path": [
+            "api",
+            "quizzes",
+            "6ac353c8dafcf7f85f9df58c",
+            "populate"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "09 – Delete quiz",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "https://localhost:3443/api/quizzes/6ac353c8dafcf7f85f9df58c",
+          "protocol": "https",
+          "host": [
+            "localhost"
+          ],
+          "port": "3443",
+          "path": [
+            "api",
+            "quizzes",
+            "6ac353c8dafcf7f85f9df58c"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "10 – Delete question",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "https://localhost:3443/api/questions/6ac352ecdafcf7f85f9df58a",
+          "protocol": "https",
+          "host": [
+            "localhost"
+          ],
+          "port": "3443",
+          "path": [
+            "api",
+            "questions",
+            "6ac352ecdafcf7f85f9df58a"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}

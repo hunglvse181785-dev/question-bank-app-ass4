@@ -1,0 +1,39 @@
+<h1><%= editing ? 'Sửa quiz' : 'Tạo quiz mới' %></h1>
+
+<p><a href="/quizzes">← Danh sách quiz</a></p>
+
+<% if (error) { %>
+  <p role="alert" style="color: #b91c1c;"><%= error %></p>
+<% } %>
+
+<form
+  class="quiz-form"
+  action="<%= editing
+    ? '/quizzes/' + quiz._id + '?_method=PUT'
+    : '/quizzes' %>"
+  method="POST"
+>
+  <div>
+    <label for="title">Tên quiz *</label>
+    <input
+      id="title"
+      name="title"
+      type="text"
+      value="<%= quiz.title %>"
+      required
+    >
+  </div>
+
+  <div>
+    <label for="description">Mô tả</label>
+    <textarea
+      id="description"
+      name="description"
+      rows="4"
+    ><%= quiz.description || '' %></textarea>
+  </div>
+
+  <button type="submit">
+    <%= editing ? 'Lưu thay đổi' : 'Tạo quiz' %>
+  </button>
+</form>

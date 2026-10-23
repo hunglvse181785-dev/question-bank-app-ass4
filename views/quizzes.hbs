@@ -1,0 +1,232 @@
+<style>
+  .quiz-table-wrapper {
+    overflow-x: auto;
+  }
+
+  .quiz-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+
+  .quiz-table th,
+  .quiz-table td {
+    border: 1px solid #d1d5db;
+    padding: 12px;
+    text-align: left;
+    vertical-align: top;
+  }
+
+  .quiz-table th {
+    background: #eaf1ff;
+  }
+
+  .quiz-table tbody tr:nth-child(even) {
+    background: #f3f4f6;
+  }
+
+  .quiz-actions {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .quiz-actions form {
+    margin: 0;
+  }
+
+  /* Nút điều hướng và nút trong bảng */
+  section > p > a,
+  .quiz-actions > a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    min-height: 38px;
+    box-sizing: border-box;
+    padding: 8px 14px;
+    margin: 4px 6px 4px 0;
+    border: 1px solid #dbe3ef;
+    border-radius: 9px;
+    background: #ffffff;
+    color: #334155;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.4;
+    text-decoration: none;
+    transition: background 0.15s, border-color 0.15s,
+                box-shadow 0.15s;
+  }
+
+  section > p > a:hover,
+  .quiz-actions > a:hover {
+    background: #eff6ff;
+    border-color: #93c5fd;
+    color: #1d4ed8;
+    box-shadow: 0 2px 6px rgb(15 23 42 / 8%);
+  }
+
+  .quiz-actions > a {
+    margin: 0;
+  }
+
+  /* Nút tạo và thêm */
+  section > p > a[href$="/create"],
+  section > p > a[href$="/add-questions"] {
+    background: #2563eb;
+    border-color: #2563eb;
+    color: #ffffff;
+  }
+
+  section > p > a[href$="/create"]:hover,
+  section > p > a[href$="/add-questions"]:hover {
+    background: #1d4ed8;
+    border-color: #1d4ed8;
+  }
+
+  /* Nút sửa */
+  section > p > a[href$="/edit"],
+  .quiz-actions > a[href$="/edit"] {
+    background: #fff7ed;
+    border-color: #fed7aa;
+    color: #9a3412;
+  }
+
+  section > p > a[href$="/edit"]:hover,
+  .quiz-actions > a[href$="/edit"]:hover {
+    background: #ffedd5;
+    border-color: #fdba74;
+  }
+
+  /* Nút lọc */
+  section > p > a[href$="/capital"] {
+    background: #eef2ff;
+    border-color: #c7d2fe;
+    color: #4338ca;
+  }
+
+  section > p > a[href$="/capital"]:hover {
+    background: #e0e7ff;
+    border-color: #a5b4fc;
+  }
+
+  /* Nút xóa */
+  .quiz-actions button {
+    min-height: 38px;
+    padding: 8px 14px;
+    border: 1px solid #fecaca;
+    border-radius: 9px;
+    background: #fef2f2;
+    color: #b91c1c;
+    font: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.4;
+    cursor: pointer;
+  }
+
+  .quiz-actions button:hover {
+    background: #fee2e2;
+    border-color: #fca5a5;
+  }
+
+  /* Form tạo và sửa */
+  .quiz-form {
+    max-width: 600px;
+  }
+
+  .quiz-form > div {
+    margin-bottom: 18px;
+  }
+
+  .quiz-form label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 600;
+  }
+
+  .quiz-form input:not([type="hidden"]),
+  .quiz-form textarea,
+  .quiz-form select {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px 12px;
+    border: 1px solid #9ca3af;
+    border-radius: 8px;
+    background: #ffffff;
+    color: #1f2937;
+    font: inherit;
+  }
+
+  .quiz-form select {
+    min-height: 42px;
+  }
+
+  .quiz-form textarea {
+    resize: vertical;
+  }
+
+  .quiz-form input:focus,
+  .quiz-form textarea:focus,
+  .quiz-form select:focus {
+    outline: 3px solid #bfdbfe;
+    outline-offset: 1px;
+    border-color: #2563eb;
+  }
+
+  .quiz-form button {
+    min-height: 42px;
+    padding: 10px 20px;
+    border: 1px solid #2563eb;
+    border-radius: 9px;
+    background: #2563eb;
+    color: #ffffff;
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .quiz-form button:hover {
+    background: #1d4ed8;
+    border-color: #1d4ed8;
+  }
+
+  /* Khung câu hỏi */
+  .quiz-question {
+    padding: 20px;
+    margin-bottom: 16px;
+    border: 1px solid #d1d5db;
+    border-radius: 12px;
+    background: #ffffff;
+  }
+
+  .quiz-question h3 {
+    margin-bottom: 14px;
+  }
+
+  .quiz-question li {
+    margin-bottom: 6px;
+  }
+
+  .quiz-question li strong {
+    color: #166534;
+  }
+
+  .quiz-question p:last-child {
+    margin-bottom: 0;
+    color: #64748b;
+  }
+
+  /* Hiển thị rõ khi dùng bàn phím */
+  section a:focus-visible,
+  .quiz-form button:focus-visible,
+  .quiz-actions button:focus-visible {
+    outline: 3px solid #93c5fd;
+    outline-offset: 3px;
+  }
+</style>
+
+<section>
+  {{{content}}}
+</section>

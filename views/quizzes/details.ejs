@@ -1,0 +1,55 @@
+<h1><%= quiz.title %></h1>
+
+<p><%= quiz.description || 'Chưa có mô tả' %></p>
+
+<p>
+  <a href="/quizzes">← Danh sách quiz</a>
+  <a href="/quizzes/<%= quiz._id %>/edit">Sửa quiz</a>
+  <a href="/quizzes/<%= quiz._id %>/add-questions">
+    + Thêm câu hỏi
+  </a>
+</p>
+
+<p>
+  <a href="/quizzes/<%= quiz._id %>">Tất cả câu hỏi</a>
+  <a href="/quizzes/<%= quiz._id %>/capital">
+    Lọc câu hỏi chứa capital
+  </a>
+</p>
+
+<% if (typeof capitalOnly !== 'undefined' && capitalOnly) { %>
+  <p>
+    <strong>Đang lọc: câu hỏi chứa capital.</strong>
+  </p>
+<% } %>
+
+<% const questions = Array.isArray(quiz.questions) ? quiz.questions : []; %>
+
+<h2>Câu hỏi trong quiz (<%= questions.length %>)</h2>
+
+<% if (questions.length === 0) { %>
+  <p>Không có câu hỏi nào trong chế độ xem này.</p>
+<% } else { %>
+  <% questions.forEach(function (question, index) { %>
+    <article class="quiz-question">
+      <h3><%= index + 1 %>. <%= question.text %></h3>
+
+      <ol type="A">
+        <% (question.options || []).forEach(function (option, optionIndex) { %>
+          <li>
+            <%= option %>
+
+            <% if (optionIndex === question.correctAnswerIndex) { %>
+              <strong> — Đáp án đúng</strong>
+            <% } %>
+          </li>
+        <% }); %>
+      </ol>
+
+      <p>
+        Từ khóa:
+        <%= (question.keywords || []).join(', ') || 'Chưa có' %>
+      </p>
+    </article>
+  <% }); %>
+<% } %>

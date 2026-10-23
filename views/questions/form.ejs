@@ -1,0 +1,72 @@
+<h1><%= editing ? 'Sửa câu hỏi' : 'Tạo câu hỏi mới' %></h1>
+
+<p><a href="/questions">← Danh sách câu hỏi</a></p>
+
+<% if (error) { %>
+  <p role="alert" style="color: #b91c1c;"><%= error %></p>
+<% } %>
+
+<form
+  class="quiz-form"
+  action="<%= editing
+    ? '/questions/' + question._id + '?_method=PUT'
+    : '/questions' %>"
+  method="POST"
+>
+  <div>
+    <label for="text">Nội dung câu hỏi *</label>
+    <textarea
+      id="text"
+      name="text"
+      rows="3"
+      required
+    ><%= question.text %></textarea>
+  </div>
+
+  <% question.options.forEach(function (option, index) { %>
+    <div>
+      <label for="option-<%= index %>">
+        Lựa chọn <%= index + 1 %> *
+      </label>
+
+      <input
+        id="option-<%= index %>"
+        name="options"
+        type="text"
+        value="<%= option %>"
+        required
+      >
+    </div>
+  <% }); %>
+
+  <div>
+    <label for="correctAnswerIndex">Đáp án đúng *</label>
+
+    <select id="correctAnswerIndex" name="correctAnswerIndex" required>
+      <% question.options.forEach(function (option, index) { %>
+        <option
+          value="<%= index %>"
+          <%= index === question.correctAnswerIndex ? 'selected' : '' %>
+        >
+          Lựa chọn <%= index + 1 %>
+        </option>
+      <% }); %>
+    </select>
+  </div>
+
+  <div>
+    <label for="keywords">Từ khóa, ngăn cách bằng dấu phẩy</label>
+
+    <input
+      id="keywords"
+      name="keywords"
+      type="text"
+      value="<%= (question.keywords || []).join(', ') %>"
+      placeholder="capital, geography"
+    >
+  </div>
+
+  <button type="submit">
+    <%= editing ? 'Lưu thay đổi' : 'Tạo câu hỏi' %>
+  </button>
+</form>
