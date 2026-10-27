@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useCallback, useEffect, useState } from 'react';
+import { Link, useSearchParams } from 'react-router-dom';
 import apiClient from '../api/apiClient.js';
 
 const emptyForm = {
@@ -10,9 +10,10 @@ const emptyForm = {
 };
 
 export default function AdminQuestionsPage() {
+  const [searchParams, setSearchParams] = useSearchParams();
   const [questions, setQuestions] = useState([]);
   const [quizzes, setQuizzes] = useState([]);
-  const [quizId, setQuizId] = useState('');
+  const [quizId, setQuizId] = useState(() => searchParams.get('quizId') || '');
   const [form, setForm] = useState(emptyForm);
   const [editingId, setEditingId] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -20,10 +21,7 @@ export default function AdminQuestionsPage() {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
 
-  async function loadData() {
-    setLoading(true);
-    setError('');
-
+  const loadData = useCallback(async () => {
     try {
       const [questionResponse, quizResponse] = await Promise.all([
         apiClient.get('/questions'),
@@ -32,7 +30,19 @@ export default function AdminQuestionsPage() {
 
       setQuestions(questionResponse.data);
       setQuizzes(quizResponse.data);
-      setQuizId((currentId) => currentId || quizResponse.data[0]?._id || '');
+      const preferredId = quizId;
+      const selectedId = quizResponse.data.some(
+        (quiz) => quiz._id === preferredId,
+      )
+        ? preferredId
+        : quizResponse.data[0]?._id || '';
+
+      setQuizId(selectedId);
+      if (searchParams.get('quizId') !== selectedId) {
+        setSearchParams(selectedId ? { quizId: selectedId } : {}, {
+          replace: true,
+        });
+      }
     } catch (requestError) {
       setError(
         requestError.response?.data?.message ||
@@ -41,11 +51,28 @@ export default function AdminQuestionsPage() {
     } finally {
       setLoading(false);
     }
-  }
+  }, [quizId, searchParams, setSearchParams]);
 
   useEffect(() => {
     loadData();
-  }, []);
+  }, [loadData]);
+
+  const selectedQuiz = quizzes.find((quiz) => quiz._id === quizId);
+  const linkedQuestionIds = new Set(
+    (selectedQuiz?.questions || []).map((question) =>
+      String(question?._id || question),
+    ),
+  );
+  const visibleQuestions = questions.filter((question) =>
+    linkedQuestionIds.has(String(question._id)),
+  );
+
+  function handleQuizChange(nextQuizId) {
+    setQuizId(nextQuizId);
+    setSearchParams(nextQuizId ? { quizId: nextQuizId } : {}, {
+      replace: true,
+    });
+  }
 
   function updateOption(index, value) {
     setForm((current) => ({
@@ -182,7 +209,7 @@ export default function AdminQuestionsPage() {
                     id="quiz"
                     className="form-select"
                     value={quizId}
-                    onChange={(event) => setQuizId(event.target.value)}
+                    onChange={(event) => handleQuizChange(event.target.value)}
                     required
                   >
                     {quizzes.length === 0 && (
@@ -295,15 +322,19 @@ export default function AdminQuestionsPage() {
           </div>
         </section>
 
-        <h2 className="h5 mb-3">Các câu hỏi hiện có</h2>
+        <h2 className="h5 mb-3">
+          Câu hỏi trong quiz: {selectedQuiz?.title || 'Chưa chọn quiz'}
+        </h2>
 
         {loading ? (
           <p role="status">Đang tải câu hỏi…</p>
-        ) : questions.length === 0 ? (
-          <div className="alert alert-info">Chưa có câu hỏi nào.</div>
+        ) : !selectedQuiz ? (
+          <div className="alert alert-info">Hãy chọn quiz để xem câu hỏi.</div>
+        ) : visibleQuestions.length === 0 ? (
+          <div className="alert alert-info">Quiz này chưa có câu hỏi nào.</div>
         ) : (
           <div className="d-grid gap-3">
-            {questions.map((question) => (
+            {visibleQuestions.map((question) => (
               <article
                 className="card border-0 shadow-sm"
                 key={question._id}

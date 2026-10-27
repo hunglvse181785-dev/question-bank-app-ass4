@@ -174,7 +174,7 @@ export default function AdminQuizzesPage() {
                     <small className="text-secondary">{quiz.questions?.length ?? 0} câu hỏi</small>
                   </div>
                   <div className="d-flex align-items-start gap-2 flex-wrap">
-                    <Link to="/admin/questions" className="btn btn-sm btn-success">Thêm câu hỏi</Link>
+                    <Link to={`/admin/questions?quizId=${quiz._id}`} className="btn btn-sm btn-success">Thêm câu hỏi</Link>
                     <button className="btn btn-sm btn-outline-primary" type="button" onClick={() => startEditing(quiz)}>Sửa</button>
                     <button className="btn btn-sm btn-outline-danger" type="button" onClick={() => handleDelete(quiz)}>Xóa</button>
                   </div>
